@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "arena/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install (no deps required)
+        run: npm ci 2>&1 || npm install 2>&1 || echo "no deps"
+      - name: Check syntax
+        run: node --check gdpr.js && echo "✓ gdpr.js syntax OK"
+      - name: Lint (optional)
+        run: npx --yes prettier --check "gdpr.js" "gdpr.css" "index.html" || echo "prettier check done"
+      - name: Tests
+        run: npm test 2>&1 || node --test tests/*.test.js 2>&1
+      - name: Validate demo HTML
+        run: |
+          python3 -m http.server 8000 &
+          sleep 2
+          curl -fsS http://localhost:8000/index.html | head -n 20
+          kill %1 || true

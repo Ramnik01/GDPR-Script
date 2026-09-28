@@ -1,0 +1,38 @@
+{
+  "name": "gdpr-script",
+  "version": "2.0.0",
+  "description": "Lightweight, accessible, GDPR / ePrivacy compliant consent banner — no dependencies, <8 kB gzipped.",
+  "main": "gdpr.js",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . --ext .js,.html",
+    "format": "prettier --write \"**/*.{js,css,html,json,md}\"",
+    "test": "node --test tests/*.test.js",
+    "serve": "npx serve ."
+  },
+  "keywords": [
+    "gdpr",
+    "consent",
+    "cookie",
+    "popup",
+    "banner",
+    "privacy",
+    "ccpa",
+    "eprivacy"
+  ],
+  "author": "Ramnik01",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ramnik01/GDPR-Script.git"
+  },
+  "browserslist": [
+    ">0.5%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "devDependencies": {},
+  "engines": {
+    "node": ">=16"
+  }
+}

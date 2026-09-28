@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>GDPR-Script Demo — Compliant Cookie Consent</title>
+    <meta
+      name="description"
+      content="GDPR-Script demo: lightweight, accessible, prior-consent cookie banner."
+    />
+    <link rel="stylesheet" href="gdpr.css" />
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --fg: #0f172a;
+        --muted: #475569;
+        --border: #e2e8f0;
+        --card: #fff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #020617;
+          --fg: #f1f5f9;
+          --muted: #94a3b8;
+          --border: #1e293b;
+          --card: #0f172a;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          ui-sans-system,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Helvetica,
+          Arial;
+        background: var(--bg);
+        color: var(--fg);
+        line-height: 1.6;
+      }
+      .wrap {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 40px 20px 80px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        background: #0f172a;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 999px;
+      }
+      @media (prefers-color-scheme: dark) {
+        .badge {
+          background: #fff;
+          color: #0f172a;
+        }
+      }
+      h1 {
+        font-size: clamp(28px, 4vw, 40px);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin: 18px 0 10px;
+      }
+      .lead {
+        color: var(--muted);
+        font-size: 17px;
+        max-width: 60ch;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+        margin: 28px 0;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+      }
+      .card h3 {
+        margin: 0 0 6px;
+        font-size: 15px;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 13px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 16px;
+        border-radius: 12px;
+        overflow: auto;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 18px 0;
+      }
+      .btn {
+        appearance: none;
+        border-radius: 999px;
+        padding: 10px 16px;
+        font: inherit;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--fg);
+      }
+      .btn.primary {
+        background: var(--fg);
+        color: var(--bg);
+        border-color: var(--fg);
+      }
+      .hint {
+        font-size: 13px;
+        color: var(--muted);
+        border-left: 3px solid var(--border);
+        padding-left: 12px;
+        margin: 16px 0;
+      }
+      .log {
+        font-family: ui-monospace, monospace;
+        font-size: 12px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        min-height: 56px;
+      }
+      footer {
+        margin-top: 36px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 12.5px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      footer a {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <span class="badge">GDPR • ePrivacy • CCPA ready</span>
+        <a
+          href="https://github.com/Ramnik01/GDPR-Script"
+          style="font-size: 13px; color: var(--muted)"
+          >GitHub</a
+        >
+      </header>
+
+      <h1>Privacy that doesn't nag.</h1>
+      <p class="lead">
+        GDPR-Script 2.0 is a &lt;8 kB, dependency-free consent banner that blocks non-essential
+        cookies <em>before</em> consent and respects <code>Global Privacy Control</code>. Equal
+        Accept / Reject, granular categories, revocable in one click, accessible and CSP-safe.
+      </p>
+
+      <div class="btns">
+        <button class="btn primary" onclick="GDPR.showSettings()">Customize consent</button>
+        <button class="btn" onclick="GDPR.resetConsent()">Reset &amp; show banner</button>
+        <button
+          class="btn"
+          onclick="
+            document.getElementById('log').textContent = JSON.stringify(GDPR.getConsent(), null, 2)
+          "
+        >
+          Show stored consent
+        </button>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>🔒 Prior consent</h3>
+          <p>
+            All <code>marketing</code> / <code>statistics</code> scripts stay blocked until the user
+            opts in. No cookie wall.
+          </p>
+        </div>
+        <div class="card">
+          <h3>⚖️ Equal choice</h3>
+          <p>
+            Accept all, Reject non-essential, or Customize — same size, same contrast. No dark
+            patterns.
+          </p>
+        </div>
+        <div class="card">
+          <h3>♿ Accessible</h3>
+          <p>
+            Dialog role, focus trap, ESC, keyboard, <code>prefers-reduced-motion</code> and 4.5:1
+            contrast.
+          </p>
+        </div>
+        <div class="card">
+          <h3>🛡️ Secure by default</h3>
+          <p>
+            SameSite=Lax, Secure cookies, no <code>innerHTML</code> with user data, no
+            <code>eval</code>.
+          </p>
+        </div>
+      </div>
+
+      <h2>Install — 30 seconds</h2>
+      <pre><code>&lt;link rel="stylesheet" href="gdpr.css"&gt;
+&lt;script src="gdpr.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  GDPR.init({
+    name: 'Acme',
+    policyUrl: '/privacy',
+    position: 'bottom', // top | bottom | center
+    expiryDays: 182,
+    categories: [
+      { id: 'necessary', name: 'Necessary', required: true, description: '...' },
+      { id: 'statistics', name: 'Statistics', description: '...' }
+    ]
+  })
+&lt;/script&gt;
+
+&lt;!-- Block until consent: --&gt;
+&lt;script type="text/plain" data-gdpr-category="statistics"
+        data-src="https://www.googletagmanager.com/gtag/js?id=G-XXXX"&gt;&lt;/script&gt;
+
+&lt;iframe type="text/plain" data-gdpr-category="marketing"
+        data-src="https://www.youtube.com/embed/dQw4w9WgXcQ"&gt;&lt;/iframe&gt;</code></pre>
+
+      <p class="hint">
+        <strong>Test blocking:</strong> the analytics snippet below will only load if you Accept
+        statistics/marketing. Open DevTools → Network and watch <code>gtag/js</code> stay blocked
+        until consent.
+      </p>
+
+      <!-- Example blocked scripts (won't load until consent) -->
+      <script
+        type="text/plain"
+        data-gdpr-category="statistics"
+        data-src="https://www.googletagmanager.com/gtag/js?id=G-DEMO123"
+      ></script>
+      <script type="text/plain" data-gdpr-category="statistics">
+        console.log('%c[GDPR] statistics script hydrated ✓ — consent given', 'color: #16a34a; font-weight: 700');
+        window._demoStatisticsLoaded = true;
+        document.dispatchEvent(new CustomEvent('demo:statistics-allowed'));
+      </script>
+
+      <div class="card" style="margin: 18px 0">
+        <h3 style="margin: 0 0 8px">Live state</h3>
+        <div id="status" class="log" aria-live="polite">Waiting for consent choice…</div>
+        <div id="log" class="log" style="margin-top: 10px"></div>
+      </div>
+
+      <h2>JS API</h2>
+      <pre><code>GDPR.hasConsent('marketing') // → boolean
+GDPR.getConsent()           // → { version, timestamp, categories, expiryDays } | null
+GDPR.on('consent', (record) =&gt; console.log('changed', record))
+GDPR.showSettings()         // open preferences modal
+GDPR.resetConsent()         // clear and re-show banner (useful for testing)
+GDPR.acceptAll() / GDPR.rejectAll()</code></pre>
+
+      <footer>
+        <span
+          >MIT © Ramnik01 — GDPR-Script 2.0. Uses no cookies except one consent cookie
+          (<code>gdpr_consent</code>) after choice.</span
+        >
+        <span
+          ><a
+            href="#"
+            onclick="
+              GDPR.showSettings()
+              return false
+            "
+            >Cookie settings</a
+          >
+          · <a href="/privacy">Privacy policy</a></span
+        >
+      </footer>
+    </div>
+
+    <!-- NoScript fallback — required for ePrivacy transparency when JS disabled -->
+    <noscript>
+      <div
+        style="
+          position: fixed;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: #0f172a;
+          color: #fff;
+          padding: 12px 16px;
+          text-align: center;
+          font: 14px system-ui;
+        "
+      >
+        We use cookies to improve your experience. Enable JavaScript to manage preferences or see
+        our
+        <a href="/privacy" style="color: #93c5fd">privacy policy</a>.
+      </div>
+    </noscript>
+
+    <script src="gdpr.js"></script>
+    <script>
+      GDPR.init({
+        name: 'GDPR-Script Demo',
+        policyUrl: '#',
+        position: 'bottom',
+        expiryDays: 182,
+        respectGPC: true,
+        strings: {
+          title: 'We value your privacy',
+          policyLabel: 'privacy policy',
+        },
+        onConsentChange: (record) => {
+          const el = document.getElementById('status')
+          el.textContent =
+            'Consent updated @ ' +
+            new Date(record.timestamp).toLocaleString() +
+            '\n' +
+            JSON.stringify(record.categories, null, 2)
+          el.style.borderColor = '#16a34a'
+          setTimeout(() => (el.style.borderColor = ''), 1200)
+        },
+      })
+
+      // Demo: show current state on load
+      window.addEventListener('gdpr:consent', (e) => {
+        document.getElementById('log').textContent = JSON.stringify(e.detail, null, 2)
+      })
+      // if already consented before init
+      setTimeout(() => {
+        const c = GDPR.getConsent()
+        if (c) {
+          document.getElementById('status').textContent =
+            'Existing consent:\n' + JSON.stringify(c.categories, null, 2)
+          document.getElementById('log').textContent = JSON.stringify(c, null, 2)
+        } else {
+          document.getElementById('status').textContent =
+            'No consent yet — banner will appear shortly.'
+        }
+      }, 500)
+
+      // Info box for blocked script demo
+      document.addEventListener('demo:statistics-allowed', () => {
+        const s = document.getElementById('status')
+        s.textContent += '\n\n✓ Demo statistics inline script executed (hydrated after consent).'
+      })
+    </script>
+  </body>
+</html>
